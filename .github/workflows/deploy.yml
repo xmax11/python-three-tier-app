@@ -13,7 +13,7 @@ jobs:
       - name: Checkout Code
         uses: actions/checkout@v4
         with:
-          # Required for SonarCloud to see full git history and detect the main branch
+          # Critical: Fetch all history so SonarCloud can detect the main branch
           fetch-depth: 0
 
       - name: Set up Python
@@ -35,12 +35,12 @@ jobs:
       - name: Test with pytest
         run: |
           pip install pytest-cov
-          # Ensure coverage is exported to XML for SonarCloud to read
+          # Generates coverage.xml for SonarCloud
           PYTHONPATH=. pytest --cov=app --cov-report=xml
 
       - name: SonarCloud Scan
-        # Pinned to stable version v2.0.2 (commit c25d2e7)
-        uses: SonarSource/sonarcloud-github-action@c25d2e76b97087f90be68d9047b853a4792c306a
+        # Using the updated, stable SonarSource action
+        uses: SonarSource/sonarqube-scan-action@v5.0.0
         env:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
         with:
