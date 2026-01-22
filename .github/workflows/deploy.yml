@@ -39,17 +39,10 @@ jobs:
           PYTHONPATH=. pytest --cov=app --cov-report=xml
 
       - name: SonarCloud Scan
-        # Using the updated, stable SonarSource action
-        uses: SonarSource/sonarqube-scan-action@v5.0.0
+        uses: SonarSource/sonarqube-scan-action@v6
         env:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-        with:
-          args: >
-            -Dsonar.organization=xmax11
-            -Dsonar.projectKey=python-three-tier-app
-            -Dsonar.python.coverage.reportPaths=coverage.xml
-            -Dsonar.sources=.
-            -Dsonar.exclusions=**/tests/**
+        # No 'args' needed here if you use the sonar-project.properties file!
 
 
   build-and-scan:
