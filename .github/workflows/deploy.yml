@@ -40,8 +40,10 @@ jobs:
         with:
             organization: xmax11
             projectKey: python-three-tier-app
+            projectBaseDir: .
         env:
             SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+
 
 
   build-and-scan:
