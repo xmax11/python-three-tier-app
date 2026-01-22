@@ -36,18 +36,17 @@ jobs:
 
       # ✅ CORRECT SonarCloud Scan
       - name: SonarCloud Scan
-        uses: SonarSource/sonarcloud-github-action@v2
+        uses: SonarSource/sonarcloud-github-action@v2.1.0
         with:
             organization: xmax11
             projectKey: python-three-tier-app
             projectBaseDir: .
             args: >
+                -Dsonar.python.coverage.reportPaths=coverage.xml
                 -Dsonar.branch.name=main
         env:
             SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-
-
-
+            
   build-and-scan:
     needs: test
     runs-on: ubuntu-latest
