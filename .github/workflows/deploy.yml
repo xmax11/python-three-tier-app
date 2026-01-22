@@ -38,8 +38,9 @@ jobs:
       uses: sonarsource/sonarqube-scan-action@v2
       env:
         SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-        SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}
+        SONAR_HOST_URL: https://sonarcloud.io
         SONAR_ORGANIZATION: xmax11
+        SONAR_PROJECT_KEY: three-tier-app
 
   build-and-scan:
     needs: test
