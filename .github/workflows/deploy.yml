@@ -108,31 +108,37 @@ jobs:
     if: github.ref == 'refs/heads/main'
 
     steps:
-      - uses: actions/checkout@v4
+    # Checkout code
+    - uses: actions/checkout@v4
 
-      - name: Configure AWS credentials
-        uses: aws-actions/configure-aws-credentials@v4
-        with:
-          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          aws-region: us-east-1
+    # Configure AWS credentials for other steps if needed
+    - name: Configure AWS credentials
+      uses: aws-actions/configure-aws-credentials@v4
+      with:
+        aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+        aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+        aws-region: us-east-1
 
-      - name: Update Dockerrun.aws.json
-        run: |
-          sed -i "s/\${AWS_ACCOUNT_ID}/${{ secrets.AWS_ACCOUNT_ID }}/g" Dockerrun.aws.json
-          sed -i "s/\${AWS_REGION}/us-east-1/g" Dockerrun.aws.json
-          sed -i "s/\${GITHUB_SHA}/${{ github.sha }}/g" Dockerrun.aws.json
+    # Update Dockerrun.aws.json with dynamic values
+    - name: Update Dockerrun.aws.json
+      run: |
+        sed -i "s/\${AWS_ACCOUNT_ID}/${{ secrets.AWS_ACCOUNT_ID }}/g" Dockerrun.aws.json
+        sed -i "s/\${AWS_REGION}/us-east-1/g" Dockerrun.aws.json
+        sed -i "s/\${GITHUB_SHA}/${{ github.sha }}/g" Dockerrun.aws.json
 
-      - name: Create deployment package
-        run: zip deploy.zip Dockerrun.aws.json
+    # Create deployment package
+    - name: Create deployment package
+      run: zip deploy.zip Dockerrun.aws.json
 
-      - name: Deploy to AWS Elastic Beanstalk
-        uses: einaregilsson/beanstalk-deploy@v21
-        with:
-          application_name: three-tier-app
-          environment_name: three-tier-app-env
-          version_label: ${{ github.sha }}
-          region: us-east-1
-          deployment_package: deploy.zip
-          create_application: true
-          create_environment: true
+    # Deploy to AWS Elastic Beanstalk
+    - name: Deploy to AWS Elastic Beanstalk
+      uses: einaregilsson/beanstalk-deploy@v21
+      with:
+        aws_access_key: ${{ secrets.AWS_ACCESS_KEY_ID }}
+        aws_secret_key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+        region: us-east-1
+        application_name: three-tier-app
+        environment_name: three-tier-app-env
+        version_label: ${{ github.sha }}
+        deployment_package: deploy.zip
+        wait_for_deployment: true
