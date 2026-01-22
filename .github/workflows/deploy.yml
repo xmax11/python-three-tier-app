@@ -41,6 +41,8 @@ jobs:
             organization: xmax11
             projectKey: python-three-tier-app
             projectBaseDir: .
+            args: >
+                -Dsonar.branch.name=main
         env:
             SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
 
