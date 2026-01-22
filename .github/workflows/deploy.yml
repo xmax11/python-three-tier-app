@@ -9,7 +9,6 @@ on:
 jobs:
   test:
     runs-on: ubuntu-latest
-
     steps:
       - uses: actions/checkout@v4
 
@@ -34,19 +33,19 @@ jobs:
           pip install pytest-cov
           PYTHONPATH=. pytest --cov=app --cov-report=xml
 
-      # ✅ CORRECT SonarCloud Scan
       - name: SonarCloud Scan
         uses: SonarSource/sonarcloud-github-action@v2.1.0
         with:
-            organization: xmax11
-            projectKey: python-three-tier-app
-            projectBaseDir: .
-            args: >
-                -Dsonar.python.coverage.reportPaths=coverage.xml
-                -Dsonar.branch.name=main
+          organization: xmax11
+          projectKey: python-three-tier-app
+          projectBaseDir: .
+          args: >
+            -Dsonar.python.coverage.reportPaths=coverage.xml
+            -Dsonar.branch.name=main
         env:
-            SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-            
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+
+
   build-and-scan:
     needs: test
     runs-on: ubuntu-latest
