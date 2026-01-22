@@ -45,3 +45,4 @@ Set the following secrets in GitHub:
 - `AWS_ACCOUNT_ID`
 - `SONAR_TOKEN`
 - `SONAR_HOST_URL`
+- `SONAR_ORGANIZATION`
