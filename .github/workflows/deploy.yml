@@ -141,4 +141,4 @@ jobs:
         environment_name: three-tier-app-env
         version_label: ${{ github.sha }}
         deployment_package: deploy.zip
-        wait_for_deployment: true
+        wait_for_deployment: false
