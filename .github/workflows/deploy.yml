@@ -39,7 +39,7 @@ jobs:
         uses: SonarSource/sonarcloud-github-action@v2
         with:
           organization: xmax11
-          projectKey: three-tier-app
+          projectKey: python-three-tier-app
         env:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
 
