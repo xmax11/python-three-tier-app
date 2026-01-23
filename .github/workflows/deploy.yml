@@ -111,7 +111,7 @@ jobs:
     # Checkout code
     - uses: actions/checkout@v4
 
-    # Configure AWS credentials for other steps if needed
+    # Configure AWS credentials
     - name: Configure AWS credentials
       uses: aws-actions/configure-aws-credentials@v4
       with:
@@ -139,6 +139,7 @@ jobs:
         region: us-east-1
         application_name: three-tier-app
         environment_name: three-tier-app-env
-        version_label: ${{ github.sha }}
+        version_label: "${{ github.sha }}-${{ github.run_id }}"
         deployment_package: deploy.zip
+        use_existing_version_if_available: true
         wait_for_deployment: false
