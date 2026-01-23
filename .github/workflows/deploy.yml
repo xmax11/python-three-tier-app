@@ -137,8 +137,9 @@ jobs:
         aws_access_key: ${{ secrets.AWS_ACCESS_KEY_ID }}
         aws_secret_key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
         region: us-east-1
-        application_name: three-tier-app
-        environment_name: three-tier-app-env
+        application_name: "three-tier-app"
+        # Use the Environment ID you just found in the CLI
+        environment_name: "e-ekzxmmwdhp" 
         version_label: "${{ github.sha }}-${{ github.run_id }}"
         deployment_package: deploy.zip
         use_existing_version_if_available: true
